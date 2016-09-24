@@ -165,7 +165,7 @@ public class Game {
     for (Iterator<Map.Entry<String, String>> ite = properties.entrySet().iterator(); ite.hasNext();) {
       Map.Entry<String, String> entry = ite.next();
       if (!entry.getValue().equals(reReadProps.get(entry.getKey()))) {
-        log.debug("Property mismatch {}={} {}", entry.getKey(), entry.getValue(), reReadProps.get(entry.getKey()));
+        log.debug("Property mismatch {}= {}", entry.getKey(), entry.getValue() + " " + reReadProps.get(entry.getKey()));
         return false;
       }
     }
