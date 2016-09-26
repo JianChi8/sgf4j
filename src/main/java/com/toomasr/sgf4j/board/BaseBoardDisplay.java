@@ -137,4 +137,5 @@ public class BaseBoardDisplay implements IBoardDisplay {
     public Square getSquare(int x, int y) {
         return vBoard[x][y];
     }
+    public Square[][] getAllSquare(){return vBoard;}
 }

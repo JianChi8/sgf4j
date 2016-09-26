@@ -20,4 +20,5 @@ public interface IBoardDisplay {
     Set<Group> findDistinctGroups(StoneState color);
     boolean isGroupDead(Group group);
     Square getSquare(int x, int y);
+    Square[][] getAllSquare();
 }
