@@ -50,6 +50,9 @@ public class Square {
     return this.color;
   }
 
+  public void setColor(StoneState color){
+    this.color = color;
+  }
   @Override
   public int hashCode() {
     final int prime = 31;

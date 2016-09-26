@@ -54,10 +54,6 @@ public class Group {
     }
   }
 
-  public boolean isDead(VirtualBoard brd) {
-    return isDead(brd.getBoard());
-  }
-
   public String toString() {
     return "Size="+stones.size();
   }

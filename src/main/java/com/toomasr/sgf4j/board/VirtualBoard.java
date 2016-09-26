@@ -11,22 +11,20 @@ import java.util.Set;
 import com.toomasr.sgf4j.parser.GameNode;
 import com.toomasr.sgf4j.parser.Util;
 
+/**
+ * 应该还有添加模式的选择，模式应该有：下棋、添加黑、添加白、添加三角圆形方块标记标签
+ * CR圆形, TR三角, SQ方块, MA标记X, LB标签
+ */
+
 public class VirtualBoard {
   private int size = 19;
-  private Square[][] vBoard = new Square[size][size];
   private List<BoardListener> boardListeners = new ArrayList<>();
   private Map<GameNode, Set<Group>> moveToRemovedGroups = new HashMap<>();
 
-  public VirtualBoard() {
-    initEmptyBoard();
-  }
+  IBoardDisplay boardDisplay;
 
-  private void initEmptyBoard() {
-    for (int i = 0; i < vBoard.length; i++) {
-      for (int j = 0; j < vBoard.length; j++) {
-        vBoard[i][j] = new Square(StoneState.EMPTY, i, j);
-      }
-    }
+  public VirtualBoard(IBoardDisplay boardDisplay) {
+    this.boardDisplay=boardDisplay;
   }
 
   public void makeMove(GameNode move, GameNode prevMove) {
@@ -34,7 +32,7 @@ public class VirtualBoard {
     if (!move.isPass() && !move.isPlacementMove()) {
       int x = move.getCoords()[0];
       int y = move.getCoords()[1];
-      this.vBoard[x][y] = new Square(move.getColorAsEnum(), x, y);
+      boardDisplay.addStone(new Square(move.getColorAsEnum(), x, y));
       Set<Group> removedGroups = removeDeadGroupsForOppColor(move.getColorAsEnum());
       moveToRemovedGroups.put(move, removedGroups);
       // place the stone on the board
@@ -46,7 +44,7 @@ public class VirtualBoard {
   }
 
   public void placeStone(StoneState color, int x, int y) {
-    this.vBoard[x][y] = new Square(color, x, y);
+    boardDisplay.addStone(new Square(color, x, y));
     for (Iterator<BoardListener> ite = boardListeners.iterator(); ite.hasNext();) {
       BoardListener boardListener = ite.next();
       boardListener.placeStone(x, y, color);
@@ -92,7 +90,7 @@ public class VirtualBoard {
     Set<Group> rtrn = new HashSet<Group>();
     for (Iterator<Group> ite = groups.iterator(); ite.hasNext();) {
       Group group = ite.next();
-      if (group.isDead(vBoard)) {
+      if (isGroupDead(group)) {
         removeStones(group);
         rtrn.add(group);
       }
@@ -101,7 +99,7 @@ public class VirtualBoard {
   }
 
   public void removeStone(int x, int y) {
-    vBoard[x][y] = new Square(x, y);
+    boardDisplay.addStone(new Square(x, y));
     for (Iterator<BoardListener> ite = boardListeners.iterator(); ite.hasNext();) {
       BoardListener boardListener = ite.next();
       boardListener.removeStone(x, y);
@@ -116,46 +114,9 @@ public class VirtualBoard {
   }
 
   protected Set<Group> findDistinctGroups(StoneState color) {
-    Set<Square> alreadyChecked = new HashSet<Square>();
-
-    Set<Group> groups = new HashSet<Group>();
-    Group activeGroup = new Group();
-    for (int i = 0; i < vBoard.length; i++) {
-      for (int j = 0; j < vBoard[i].length; j++) {
-        // we found a group, lets expand this
-        if (vBoard[i][j].isOfColor(color) && !alreadyChecked.contains(vBoard[i][j])) {
-          populateGroup(i, j, color, activeGroup);
-          alreadyChecked.addAll(activeGroup.stones);
-
-          groups.add(activeGroup);
-          activeGroup = new Group();
-        }
-        // alreadyChecked.add(new Square());
-      }
-    }
-    return groups;
+    return boardDisplay.findDistinctGroups(color);
   }
 
-  /*
-   * Starts from a node and then finds all the connected stones with this group.
-   * Basically populates by starting from a single node.
-   */
-  private void populateGroup(int i, int j, StoneState color, Group activeGroup) {
-    if (vBoard[i][j].isOfColor(color) && !activeGroup.contains(vBoard[i][j])) {
-      activeGroup.addStone(vBoard[i][j]);
-      if (i - 1 > -1)
-        populateGroup(i - 1, j, color, activeGroup);
-      if (i + 1 < 19)
-        populateGroup(i + 1, j, color, activeGroup);
-      if (j - 1 > -1)
-        populateGroup(i, j - 1, color, activeGroup);
-      if (j + 1 < 19)
-        populateGroup(i, j + 1, color, activeGroup);
-    }
-    else {
-      return;
-    }
-  }
 
   public StoneState oppColor(StoneState color) {
     if (color.equals(StoneState.EMPTY))
@@ -167,20 +128,15 @@ public class VirtualBoard {
   }
 
   public void printBoard() {
-    for (int i = 0; i < vBoard.length; i++) {
-      for (int j = 0; j < vBoard[i].length; j++) {
-        System.out.print(vBoard[i][j]);
-      }
-      System.out.println();
-    }
+    System.out.println(boardDisplay.printBoard());
   }
 
   public Square getCoord(int x, int y) {
-    return vBoard[x][y];
+    return boardDisplay.getSquare(x,y);
   }
 
   public static VirtualBoard setUpFromStringBoard(String board) {
-    VirtualBoard rtrn = new VirtualBoard();
+    VirtualBoard rtrn = new VirtualBoard(new BaseBoardDisplay(19));
     String[] lines = board.split("\\n");
     for (int i = 0; i < lines.length; i++) {
       for (int j = 0; j < lines[i].length(); j++) {
@@ -189,6 +145,10 @@ public class VirtualBoard {
       }
     }
     return rtrn;
+  }
+
+  public boolean isGroupDead(Group group){
+    return boardDisplay.isGroupDead(group);
   }
 
   public void fastForwardTo(GameNode fwdTo) {
@@ -205,7 +165,7 @@ public class VirtualBoard {
     }
     while ((node = node.getParentNode()) != null);
 
-    initEmptyBoard();
+    boardDisplay.initEmptyBoard();
 
     for (Iterator<BoardListener> ite = boardListeners.iterator(); ite.hasNext();) {
       BoardListener boardListener = ite.next();
@@ -220,10 +180,6 @@ public class VirtualBoard {
 
       prevMove = node;
     }
-  }
-
-  public Square[][] getBoard() {
-    return vBoard;
   }
 
   public void addBoardListener(BoardListener listener) {
