@@ -18,122 +18,21 @@ public class Parser {
 
   // http://www.red-bean.com/sgf/properties.html
   private static final Set<String> generalProps = new HashSet<String>();
-
-  static {
-    // Application used to generate the SGF
-    generalProps.add("AP");
-    // Black's Rating
-    generalProps.add("BR");
-    // White's Rating
-    generalProps.add("WR");
-    // KOMI
-    generalProps.add("KM");
-    // Black Player Extended information
-    generalProps.add("PBX");
-    // Black Player name
-    generalProps.add("PB");
-    // White Player name
-    generalProps.add("PW");
-    // I think - Black Player name
-    generalProps.add("PX");
-    // I think - White Player name
-    generalProps.add("PY");
-    // Charset
-    generalProps.add("CA");
-    // File format
-    generalProps.add("FF");
-    // Game type - 1 means Go
-    generalProps.add("GM");
-    // Size of the board
-    generalProps.add("SZ");
-    // Annotator
-    generalProps.add("AN");
-    // Name of the event
-    generalProps.add("EV");
-    // Name of the event extended
-    // Extended info about the event
-    generalProps.add("EVX");
-    // Rount number
-    generalProps.add("RO");
-    // Rules
-    generalProps.add("RU");
-    // Time limit in seconds
-    generalProps.add("TM");
-    // How overtime is handled
-    generalProps.add("OT");
-    // Date of the game
-    generalProps.add("DT");
-    // Extended date
-    generalProps.add("DTX");
-    // Place of the game
-    generalProps.add("PC");
-    // Result of the game
-    generalProps.add("RE");
-    // I think - Result of the game
-    generalProps.add("ER");
-    // How to show comments
-    generalProps.add("ST");
-    /*
-     * Provides some extra information about the following game.
-     * The intend of GC is to provide some background information
-     * and/or to summarize the game itself.
-     */
-    generalProps.add("GC");
-    // Any copyright information
-    generalProps.add("CP");
-    // Provides name of the source
-    generalProps.add("SO");
-    // Name of the white team
-    generalProps.add("WT");
-    // Name of the black team
-    generalProps.add("BT");
-    // name of the user or program who entered the game
-    generalProps.add("US");
-    // How to print move numbers
-    generalProps.add("PM");
-    // Some more printing magic
-    generalProps.add("FG");
-    // Name of the game
-    generalProps.add("GN");
-    // Black territory or area
-    generalProps.add("TB");
-    // White territory or area
-    generalProps.add("TW");
-    // Sets the move number to the given value, i.e. a move
-    // specified in this node has exactly this move-number. This
-    // can be useful for variations or printing.
-    // SGF4J doesn't honour this atm
-    generalProps.add("MN");
-    // Handicap stones
-    generalProps.add("HA");
-    // "AB": add black stones AB[point list]
-    generalProps.add("AB");
-    // "AW": add white stones AW[point list]
-    generalProps.add("AW");
-    // add empty = remove stones
-    generalProps.add("AE");
-    // PL tells whose turn it is to play.
-    generalProps.add("PL");
+/*
+  // I think - Black Player name
+  generalProps.add("PX");
+  // I think - White Player name
+  generalProps.add("PY");
     // KGSDE - kgs scoring - marks all prisoner stones
     // http://senseis.xmp.net/?CgobanProblemsAndSolutions
     generalProps.add("KGSDE");
-    // KGS - score white
+    // KGS - score white KGS 得分
     generalProps.add("KGSSW");
-    // KGS - score black
+    // KGS - score black KGS 得分
     generalProps.add("KGSSB");
     // Checkmark - ignored in FF4
     // http://www.red-bean.com/sgf/ff1_3/ff3.html and http://www.red-bean.com/sgf/changes.html
     generalProps.add("CH");
-    // I think this is White Country
-    generalProps.add("WC");
-    // "LT": enforces losing on time LT[]
-    // http://www.red-bean.com/sgf/ff1_3/ff3.html
-    // I don't get it but I'm parsing it
-    generalProps.add("LT");
-    // I think this is Black Country
-    generalProps.add("BC");
-    // I think this is just a game ID
-    generalProps.add("ID");
     // I have no idea what these properties means
     // but they are in many games of the collections
     // I've downloaded from the interwebs
@@ -142,13 +41,117 @@ public class Parser {
     generalProps.add("RD"); // maybe release date?
     generalProps.add("TL"); // something to do with time
     generalProps.add("GK"); // something to do with the game
+  // "LT": enforces losing on time LT[]
+  // http://www.red-bean.com/sgf/ff1_3/ff3.html
+  // I don't get it but I'm parsing it
+  generalProps.add("LT");
+  */
+  static {
+    // Application used to generate the SGF 应用
+    generalProps.add("AP");
+    // Black's Rating 段位
+    generalProps.add("BR");
+    // White's Rating 段位
+    generalProps.add("WR");
+    // KOMI 贴目
+    generalProps.add("KM");
+    // Black Player Extended information 信息
+    generalProps.add("PBX");
+    // Black Player name 姓名
+    generalProps.add("PB");
+    // White Player name 姓名
+    generalProps.add("PW");
+    // Charset 字符编码
+    generalProps.add("CA");
+    // File format 格式版本有四种
+    generalProps.add("FF");
+    // Game type - 1 means Go 游戏各类，默认为围棋，也可以是其它棋
+    generalProps.add("GM");
+    // Size of the board 棋盘
+    generalProps.add("SZ");
+    // Annotator 注释
+    generalProps.add("AN");
+    // Name of the event EV赛事
+    generalProps.add("EV");
+    // Name of the event extended
+    // Extended info about the event 赛事
+    generalProps.add("EVX");
+    // Rount number 回合
+    generalProps.add("RO");
+    // Rules 规则
+    generalProps.add("RU");
+    // Time limit in seconds 限时
+    generalProps.add("TM");
+    // How overtime is handled 用时
+    generalProps.add("OT");
+    // Date of the game 日期
+    generalProps.add("DT");
+    // Extended date 日期扩展
+    generalProps.add("DTX");
+    // Place of the game 地址
+    generalProps.add("PC");
+    // Result of the game 结果
+    generalProps.add("RE");
+    // I think - Result of the game
+    generalProps.add("ER");
+    // How to show comments 显示信息的方式
+    generalProps.add("ST");
+    /*
+     * Provides some extra information about the following game.
+     * The intend of GC is to provide some background information
+     * and/or to summarize the game itself. 备注
+     */
+    generalProps.add("GC");
+    // Any copyright information 版权
+    generalProps.add("CP");
+    // Provides name of the source 来源
+    generalProps.add("SO");
+    // Name of the white team 队
+    generalProps.add("WT");
+    // Name of the black team 队
+    generalProps.add("BT");
+    // name of the user or program who entered the game 编者
+    generalProps.add("US");
+    // How to print move numbers 打印
+    generalProps.add("PM");
+    // Some more printing magic 打印
+    generalProps.add("FG");
+    // Name of the game 名称
+    generalProps.add("GN");
+    // Black territory or area 来自地区
+    generalProps.add("TB");
+    // White territory or area 来自地区
+    generalProps.add("TW");
+    // Sets the move number to the given value, i.e. a move
+    // specified in this node has exactly this move-number. This
+    // can be useful for variations or printing.
+    // SGF4J doesn't honour this atm 用于打印，移动数字
+    generalProps.add("MN");
+    // Handicap stones 让子
+    generalProps.add("HA");
+    generalProps.add("AE");
+    // PL tells whose turn it is to play. 由哪方下
+    generalProps.add("PL");
+    // I think this is White Country 国家
+    generalProps.add("WC");
+    // I think this is Black Country 国家
+    generalProps.add("BC");
+    // I think this is just a game ID 编号
+    generalProps.add("ID");
 
-    // These are also available for nodes!
-
-    // time left for white
+    // These are also available for nodes! 也适用于节点
+    // time left for white剩余时间
     generalProps.add("WL");
-    // time left for black
+    // time left for black剩余时间
     generalProps.add("BL");
+
+
+  //尝试是否适用于节点
+    // "AB": add black stones AB[point list] 添加子
+    generalProps.add("AB");
+    // "AW": add white stones AW[point list] 添加子
+    generalProps.add("AW");
+    // add empty = remove stones 删除子
   }
 
   private static final Set<String> nodeProps = new HashSet<String>();
@@ -158,31 +161,33 @@ public class Parser {
     nodeProps.add("B");
     // Move for White
     nodeProps.add("W");
-    // marks given points with circle
+
+    // 下面是标记
+    // marks given points with circle 圆
     nodeProps.add("CR");
-    // marks given points with cross
+    // marks given points with cross 十字
     nodeProps.add("MA");
-    // marks given points with square
-    nodeProps.add("SQ");
-    // selected points
-    nodeProps.add("SL");
-    // labels on points
-    nodeProps.add("LB");
-    // marks given points with triangle
+    // marks given points with triangle 三角
     nodeProps.add("TR");
-    // Number of white stones to play in this byo-yomi period
+    // marks given points with square 正方
+    nodeProps.add("SQ");
+    // selected points 选择
+    nodeProps.add("SL");
+    // labels on points LB[fg:A][es:B][jk:C] 标签
+    nodeProps.add("LB");
+    // Number of white stones to play in this byo-yomi period 读秒
     nodeProps.add("OW");
-    // Number of black stones to play in this byo-yomi period
+    // Number of black stones to play in this byo-yomi period 读秒
     nodeProps.add("OB");
-    // time left for white
+    // time left for white 剩余时间  也适用于节点
     nodeProps.add("WL");
-    // time left for black
+    // time left for black 剩余时间  也适用于节点
     nodeProps.add("BL");
-    // Comment
+    // Comment 注释
     nodeProps.add("C");
     /*
      * Provides a name for the node. For more info have a look at
-     * the C-property.
+     * the C-property. 名称
      */
     nodeProps.add("N");
     /*
@@ -190,7 +195,7 @@ public class Parser {
      * Label the given points with uppercase letters. Not used in FF 3 and FF 4!
      *
      * Replaced by LB which defines the letters also:
-     * Example: L[fg][es][jk] -> LB[fg:A][es:B][jk:C]
+     * Example: L[fg][es][jk] -> LB[fg:A][es:B][jk:C] 列出
      */
     nodeProps.add("L");
   }
