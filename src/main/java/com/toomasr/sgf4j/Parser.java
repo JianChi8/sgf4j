@@ -201,6 +201,7 @@ public class Parser {
     generalProps.add("AW");
     // add empty = remove stones 删除子
     generalProps.add("AE");
+
     // time left for white 剩余时间  也适用于节点
     nodeProps.add("WL");
     // time left for black 剩余时间  也适用于节点
