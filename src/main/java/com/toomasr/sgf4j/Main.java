@@ -29,15 +29,21 @@ public class Main {
 /**
  *
  Contents
- Move Properties 	B, KO, MN, W
- Setup Properties 	AB, AE, AW, PL
- Node Annotation Properties 	C, DM, GB, GW, HO, N, UC, V
- Move Annotation Properties 	BM, DO, IT, TE
- Markup Properties 	AR, CR, DD, LB, LN, MA, SL, SQ, TR
- Root Properties 	AP, CA, FF, GM, ST, SZ
- Game Info Properties 	AN, BR, BT, CP, DT, EV, GN, GC, ON, OT, PB, PC, PW, RE, RO, RU, SO, TM, US, WR, WT
- Timing Properties 	BL, OB, OW, WL
- Miscellaneous Properties 	FG, PM, VW
+ 走棋动作	B走黑, KO强制走棋甚至违背规则, MN设定手数用于打印, W走白
+
+ 设置	AB添加黑, AE删除子, AW添加白, PL设置下棋方
+
+ 标记信息	AR箭头, CR圆, DD灰度, LB标签, LN线, MA标记X, SL选择, SQ方块, TR三角
+
+ 节点信息	C备注, DM问题手, GB黑优, GW白优, HO热点, N名称, UC状况不清晰, V价值
+ 走棋信息	BM坏棋, DO不明, IT有趣, TE手筋
+
+
+ 根结点属性	AP应用, CA编码, FF版本, GM游戏种类, ST显示信息方式, SZ横盘大小
+ 棋局信息	AN讲解人, BR黑段们, BT黑队, CP版权, DT时间, EV赛事, GN游戏名, GC扩展信息, ON发起, OT用时, PB黑方姓名, PC地点, PW白言姓名,
+            RE结果, RO手数, RU规则, SO来源, TM限时, US记录员, WR白段位, WT白队
+ 时间信息	BL黑剩时, OB黑手数, OW白手数, WL白剩时
+ 其它	FG打印用, PM打印方式, VW仅可见列表
  *
  * 以下为 MultiGo 支持的 SGF 属性：
 

@@ -4,6 +4,7 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/slf4j-log4j13-1.0.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/slf4j-log4j13-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-log4j13-1.0.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

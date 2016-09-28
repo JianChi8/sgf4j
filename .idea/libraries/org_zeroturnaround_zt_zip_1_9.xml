@@ -6,6 +6,8 @@
       <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.6.6.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/zt-zip-1.9.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.6.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/zt-zip-1.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.6.6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

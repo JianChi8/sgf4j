@@ -129,7 +129,6 @@ public class Parser {
     generalProps.add("MN");
     // Handicap stones 让子
     generalProps.add("HA");
-    generalProps.add("AE");
     // PL tells whose turn it is to play. 由哪方下
     generalProps.add("PL");
     // I think this is White Country 国家
@@ -145,13 +144,13 @@ public class Parser {
     // time left for black剩余时间
     generalProps.add("BL");
 
-
   //尝试是否适用于节点
     // "AB": add black stones AB[point list] 添加子
     generalProps.add("AB");
     // "AW": add white stones AW[point list] 添加子
     generalProps.add("AW");
     // add empty = remove stones 删除子
+  generalProps.add("AE");
   }
 
   private static final Set<String> nodeProps = new HashSet<String>();
@@ -179,10 +178,6 @@ public class Parser {
     nodeProps.add("OW");
     // Number of black stones to play in this byo-yomi period 读秒
     nodeProps.add("OB");
-    // time left for white 剩余时间  也适用于节点
-    nodeProps.add("WL");
-    // time left for black 剩余时间  也适用于节点
-    nodeProps.add("BL");
     // Comment 注释
     nodeProps.add("C");
     /*
@@ -198,6 +193,18 @@ public class Parser {
      * Example: L[fg][es][jk] -> LB[fg:A][es:B][jk:C] 列出
      */
     nodeProps.add("L");
+
+
+    // "AB": add black stones AB[point list] 添加子
+    generalProps.add("AB");
+    // "AW": add white stones AW[point list] 添加子
+    generalProps.add("AW");
+    // add empty = remove stones 删除子
+    generalProps.add("AE");
+    // time left for white 剩余时间  也适用于节点
+    nodeProps.add("WL");
+    // time left for black 剩余时间  也适用于节点
+    nodeProps.add("BL");
   }
 
   private Stack<GameNode> treeStack = new Stack<GameNode>();
